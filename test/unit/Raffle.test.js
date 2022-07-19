@@ -127,9 +127,10 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
         it("picks a winner, resets, and sends money", async () => {
             const additionalEntrances = 3
             const startingIndex = 2
+            const accounts = await ethers.getSigners()
             for (let i = startingIndex; i < startingIndex + additionalEntrances; i++) {
-                raffle = raffleContract.connect(accounts[i])
-                await raffle.enterRaffle({ value: raffleEntranceFee })
+                const accountConnectedRaffle = raffle.connect(accounts[i])
+                await accountConnectedRaffle.enterRaffle({ value: raffleEntranceFee })
             }
             const startingTimeStamp = await raffle.getLastTimeStamp()
 
